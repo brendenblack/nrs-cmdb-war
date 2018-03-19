@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <groupId>ca.bc.gov.nrs.cmdb</groupId>
+    <artifactId>nrs-cmdb-war</artifactId>
+    <packaging>war</packaging>
+    <name>nrs-cmdb-war</name>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <name>Brenden Black</name>
+            <email>brenden.m.black@cgi.com</email>
+            <organization>CGI</organization>
+        </developer>
+    </developers>
+
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dollar>$</dollar>
+		<node.version>v8.6.0</node.version>
+		<npm.version>5.3.0</npm.version>
+		<node.path>${user.home}/.node</node.path>
+		<typescript.path>src/main/angular</typescript.path>
+    </properties>
+
+    <dependencies>
+	</dependencies>
+	
+    <build>
+		<!-- Configure the resources to be filtered for property replacement -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+					<webResources>
+					  <resource>
+						<directory>${basedir}/target/angular</directory>
+						<includes>
+						  <include>assets/**/*.*</include>
+						  <include>*.*</include>
+						</includes>
+					  </resource>
+					  <resource>
+						<directory>src/main/webapp</directory>
+					  </resource>
+					</webResources>
+					
+				</configuration>
+				
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>${java-source-version}</source>
+					<target>${java-target-version}</target>
+				</configuration>
+			</plugin>
+            <plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<workingDirectory>${typescript.path}</workingDirectory>
+					<installDirectory>${node.path}</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run-script mavenbuild</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run-script mavenbuild</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>
+	</build>
+</project>

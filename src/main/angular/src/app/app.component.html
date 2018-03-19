@@ -1,0 +1,19 @@
+<layout-header></layout-header>
+
+<div *showAuthed="true" class="row">
+    <div class="col-md-2">
+        <layout-sidebar></layout-sidebar>
+    </div>
+    <div class="col-md-10 body-content">
+        <router-outlet></router-outlet>
+        <layout-footer></layout-footer>
+    </div>   
+</div>
+
+<div *showAuthed="false" class="body-content">
+    <router-outlet></router-outlet>
+    <layout-footer></layout-footer>
+</div>
+
+
+

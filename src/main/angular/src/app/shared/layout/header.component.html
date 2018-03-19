@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-secondary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Natural Resource CMDb</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav navbar-nav">
+      <!-- <li class="nav-item">
+        <a class="nav-link"
+           routerLink="/servers"
+           routerLinkActive="active">
+          Servers
+          </a>
+      </li> -->
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="dropdown01" ngbDropdownToggle>Configuration Items</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/servers" routerLinkActive="active">Servers</a>
+          <a class="dropdown-item" href="#" disabled>Projects</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+    <!-- Show this for logged out users -->
+    <ul *showAuthed="false"
+      class="nav navbar-nav pull-xs-right">
+
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/login"
+          routerLinkActive="active">
+          Sign in
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/register"
+          routerLinkActive="active">
+          Register
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- Show this for logged in users -->
+    <ul *showAuthed="true"
+      class="nav navbar-nav pull-xs-right">
+
+      <li ngbDropdown class="nav-item">
+        <a class="nav-link" id="nav-user-dropdown" ngbDropdownToggle>
+            {{ currentUser.email }}
+        </a>
+        <div ngbDropdownMenu aria-labelledby="nav-user-dropdown">
+          <a class="dropdown-item" routerLink="/accounts" routerLinkActive="active">Accounts</a>
+          <a class="dropdown-item disabled" routerLink="/profile" routerLinkActive="active">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/settings" routerLinkActive="active">sign out&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a>
+
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</nav>
